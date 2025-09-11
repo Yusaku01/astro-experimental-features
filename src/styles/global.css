@@ -1,0 +1,318 @@
+/* global.css - View Transitionsカスタムアニメーション */
+
+/* CSS変数定義 */
+:root {
+  --transition-duration: 0.3s;
+  --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* モーション設定の尊重 */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-duration: 0s;
+  }
+}
+
+/* ===== View Transition カスタムアニメーション ===== */
+
+/* slide アニメーション */
+::view-transition-old(root) {
+  animation: slideOutLeft var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-new(root) {
+  animation: slideInRight var(--transition-duration) var(--transition-easing);
+}
+
+/* fade アニメーション用の個別要素 */
+/* fade アニメーション用の個別要素 - 無効化 */
+/* [transition:animate="fade"]::view-transition-old(root) {
+  animation: fadeOut var(--transition-duration) var(--transition-easing);
+}
+
+[transition:animate="fade"]::view-transition-new(root) {
+  animation: fadeIn var(--transition-duration) var(--transition-easing);
+} */
+
+/* ===== キーフレーム定義 ===== */
+
+/* スライドアニメーション */
+@keyframes slideOutLeft {
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* フェードアニメーション */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* スケールアニメーション */
+@keyframes scaleOut {
+  to {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== 特定要素のアニメーション ===== */
+
+/* ページタイトルの特別なアニメーション */
+::view-transition-old(page-title) {
+  animation: titleSlideOut var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-new(page-title) {
+  animation: titleSlideIn var(--transition-duration) var(--transition-easing);
+}
+
+@keyframes titleSlideOut {
+  to {
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes titleSlideIn {
+  from {
+    transform: translateY(20px) scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ヒーロー画像のアニメーション */
+::view-transition-old(hero-image) {
+  animation: imageTransformOut var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-new(hero-image) {
+  animation: imageTransformIn var(--transition-duration) var(--transition-easing);
+}
+
+@keyframes imageTransformOut {
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+@keyframes imageTransformIn {
+  from {
+    transform: scale(1.1);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* 記事カードのアニメーション */
+::view-transition-old(post-1),
+::view-transition-old(post-2),
+::view-transition-old(post-3) {
+  animation: cardExpandOut var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-new(post-1),
+::view-transition-new(post-2),
+::view-transition-new(post-3) {
+  animation: cardExpandIn var(--transition-duration) var(--transition-easing);
+}
+
+@keyframes cardExpandOut {
+  to {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes cardExpandIn {
+  from {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 機能カードのスタガーアニメーション */
+::view-transition-old(feature-1) {
+  animation: staggerOut1 var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-new(feature-1) {
+  animation: staggerIn1 var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-old(feature-2) {
+  animation: staggerOut2 var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-new(feature-2) {
+  animation: staggerIn2 var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-old(feature-3) {
+  animation: staggerOut3 var(--transition-duration) var(--transition-easing);
+}
+
+::view-transition-new(feature-3) {
+  animation: staggerIn3 var(--transition-duration) var(--transition-easing);
+}
+
+@keyframes staggerOut1 {
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes staggerIn1 {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes staggerOut2 {
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes staggerIn2 {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes staggerOut3 {
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes staggerIn3 {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== レスポンシブ対応のアニメーション調整 ===== */
+@media (max-width: 768px) {
+  :root {
+    --transition-duration: 0.2s;
+  }
+
+  /* モバイルではアニメーションを控えめに */
+  @keyframes slideOutLeft {
+    to {
+      transform: translateX(-15px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(15px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes titleSlideOut {
+    to {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes titleSlideIn {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+  }
+}
+
+/* ===== デバッグ用のスタイル（開発時のみ） ===== */
+/* 注意: !importantはデバッグ用途のため例外的に使用 */
+.debug-transitions {
+  --transition-duration: 2s;
+}
+
+.debug-transitions * {
+  animation-duration: 2s;
+}
+
+/* ===== バックアップ: フォールバック時の通常アニメーション ===== */
+.page-transition-fallback {
+  opacity: 0;
+  animation: fallbackFadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fallbackFadeIn {
+  to {
+    opacity: 1;
+  }
+}

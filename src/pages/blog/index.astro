@@ -1,0 +1,375 @@
+---
+// blog/index.astro - 記事の実装例を忠実に再現
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="ブログ - View Transitions実験">
+  <div class="container">
+    <!-- 記事の実装例：複数のアニメーションパターン -->
+    <h1 transition:name="page-title">ブログページ</h1>
+    
+    <!-- アニメーション切り替えデモ -->
+    <section class="animation-demo">
+      <h2>🎬 遷移アニメーションの種類</h2>
+      <p>このページでは記事で紹介している様々なアニメーションパターンをテストできます。</p>
+      
+      <div class="demo-grid">
+        <div class="demo-card slide" transition:animate="slide">
+          <h3>スライドアニメーション</h3>
+          <p><code>transition:animate="slide"</code></p>
+          <span class="effect-name">横からスライド</span>
+        </div>
+        
+        <div class="demo-card fade" transition:animate="fade">
+          <h3>フェードアニメーション</h3>
+          <p><code>transition:animate="fade"</code></p>
+          <span class="effect-name">フェードイン・アウト</span>
+        </div>
+        
+        <div class="demo-card initial" transition:animate="initial">
+          <h3>デフォルトアニメーション</h3>
+          <p><code>transition:animate="initial"</code></p>
+          <span class="effect-name">標準の変形・移動</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- ブログ記事一覧（記事の実装例） -->
+    <section class="blog-posts">
+      <h2>記事一覧</h2>
+      <div class="posts-grid">
+        <article class="post-card" transition:name="post-1">
+          <h3><a href="/blog/sample">View Transitions実装ガイド</a></h3>
+          <p class="post-excerpt">
+            Astroで実現するスムーズなページ遷移の基本から応用まで。
+          </p>
+          <div class="post-meta">
+            <time>2025-01-15</time>
+            <span class="tag">フロントエンド</span>
+          </div>
+        </article>
+        
+        <article class="post-card" transition:name="post-2">
+          <h3><a href="/blog/sample">パフォーマンス最適化のポイント</a></h3>
+          <p class="post-excerpt">
+            大規模サイトでView Transitionsを効率的に運用する方法。
+          </p>
+          <div class="post-meta">
+            <time>2025-01-10</time>
+            <span class="tag">パフォーマンス</span>
+          </div>
+        </article>
+        
+        <article class="post-card" transition:name="post-3">
+          <h3><a href="/blog/sample">ブラウザ対応とフォールバック</a></h3>
+          <p class="post-excerpt">
+            様々なブラウザ環境での対応策とアクセシビリティ配慮。
+          </p>
+          <div class="post-meta">
+            <time>2025-01-05</time>
+            <span class="tag">アクセシビリティ</span>
+          </div>
+        </article>
+      </div>
+    </section>
+    
+    <!-- 実験コントロール -->
+    <section class="experiment-controls">
+      <h2>🔬 実験コントロール</h2>
+      <p>開発者ツールのコンソールで以下のコマンドを実行して、アニメーションをカスタマイズできます：</p>
+      
+      <div class="code-blocks">
+        <div class="code-block">
+          <h3>アニメーション速度の調整</h3>
+          <pre><code>// 遅くする
+document.documentElement.style.setProperty('--transition-duration', '1s');
+
+// 速くする  
+document.documentElement.style.setProperty('--transition-duration', '0.1s');</code></pre>
+        </div>
+        
+        <div class="code-block">
+          <h3>アニメーションの無効化</h3>
+          <pre><code>// 完全に無効化
+document.documentElement.style.setProperty('--transition-duration', '0s');
+
+// 元に戻す
+document.documentElement.style.removeProperty('--transition-duration');</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="navigation">
+      <div class="nav-buttons">
+        <a href="/about" class="nav-button prev">
+          <span class="arrow">←</span>
+          アバウトページへ
+        </a>
+        
+        <a href="/" class="nav-button next">
+          ホームページへ戻る
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ページタイトル（他ページと共有） */
+  h1[transition\\:name="page-title"] {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #059669;
+    text-align: center;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #059669, #0891b2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  section {
+    margin-bottom: 4rem;
+  }
+
+  section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+  }
+
+  /* アニメーションデモセクション */
+  .animation-demo {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .animation-demo p {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .demo-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .demo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+  }
+
+  .demo-card.slide {
+    border-color: #f59e0b;
+    background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+  }
+
+  .demo-card.fade {
+    border-color: #8b5cf6;
+    background: linear-gradient(135deg, #f3e8ff 0%, #ddd6fe 100%);
+  }
+
+  .demo-card.initial {
+    border-color: #059669;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  }
+
+  .demo-card h3 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+  }
+
+  .demo-card code {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #7c2d12;
+  }
+
+  .effect-name {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #64748b;
+  }
+
+  /* ブログ記事一覧 */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .post-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+    border-left: 4px solid #2563eb;
+    transition: transform 0.2s;
+  }
+
+  .post-card:hover {
+    transform: translateX(4px);
+  }
+
+  .post-card h3 {
+    margin-bottom: 1rem;
+  }
+
+  .post-card h3 a {
+    color: #1e293b;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .post-card h3 a:hover {
+    color: #2563eb;
+  }
+
+  .post-excerpt {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #94a3b8;
+  }
+
+  .tag {
+    background: #e2e8f0;
+    color: #475569;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+
+  /* 実験コントロール */
+  .experiment-controls {
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .experiment-controls p {
+    color: #64748b;
+    margin-bottom: 2rem;
+  }
+
+  .code-blocks {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .code-block {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.05);
+  }
+
+  .code-block h3 {
+    color: #2563eb;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .code-block pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+  }
+
+  .code-block code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  }
+
+  /* ナビゲーションボタン */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #059669;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .nav-button:hover {
+    background: #047857;
+    transform: translateY(-2px);
+  }
+
+  .nav-button.prev {
+    background: #64748b;
+  }
+
+  .nav-button.prev:hover {
+    background: #475569;
+  }
+
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    h1[transition\\:name="page-title"] {
+      font-size: 2rem;
+    }
+
+    .demo-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-buttons {
+      flex-direction: column;
+    }
+
+    .code-blocks {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

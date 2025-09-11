@@ -1,0 +1,256 @@
+---
+// index.astro - 記事の基本実装例を忠実に再現
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="ホーム - View Transitions実験">
+  <div class="container">
+    <!-- 記事の実装例：transition:nameでページタイトルを共有 -->
+    <h1 transition:name="page-title">ホームページ</h1>
+    
+    <!-- 記事の実装例：transition:nameで画像を共有 -->
+    <img
+      src="/placeholder-hero.svg"
+      alt="ヒーロー画像（プレースホルダー）"
+      class="hero-image"
+      transition:name="hero-image"
+    />
+    
+    <section class="intro">
+      <h2>View Transitions実験へようこそ</h2>
+      <p>
+        このサイトでは、<strong>AstroのView Transitions</strong>の様々な機能を実際に体験できます。
+        ページ間を移動しながら、スムーズなアニメーション効果をお楽しみください。
+      </p>
+    </section>
+
+    <section class="features">
+      <h2>実装されている機能</h2>
+      <div class="feature-grid">
+        <div class="feature-card" transition:name="feature-1">
+          <h3>基本的なページ遷移</h3>
+          <p>同じ<code>transition:name</code>を持つ要素間でのスムーズな遷移</p>
+        </div>
+        
+        <div class="feature-card" transition:name="feature-2">
+          <h3>状態の永続化</h3>
+          <p><code>transition:persist</code>によるヘッダーの状態保持</p>
+        </div>
+        
+        <div class="feature-card" transition:name="feature-3">
+          <h3>カスタムアニメーション</h3>
+          <p>CSS @keyframesを使った独自のアニメーション効果</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="navigation">
+      <h2>ページを探索する</h2>
+      <div class="nav-cards">
+        <a href="/about" class="nav-card">
+          <h3>アバウトページへ</h3>
+          <p>共有要素の遷移を確認できます</p>
+          <span class="arrow">→</span>
+        </a>
+        
+        <a href="/blog" class="nav-card">
+          <h3>ブログページへ</h3>
+          <p>複数のアニメーションパターンを体験</p>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 実験のヒント -->
+    <section class="tips">
+      <h2>🔬 実験のヒント</h2>
+      <ul>
+        <li><strong>ブラウザサポート</strong>: 右上のアイコンで対応状況を確認</li>
+        <li><strong>アニメーション速度</strong>: 開発者ツールでCSS変数を調整可能</li>
+        <li><strong>フォールバック</strong>: 未対応ブラウザでは通常遷移に自動切り替え</li>
+        <li><strong>アクセシビリティ</strong>: モーション設定に応じて自動調整</li>
+      </ul>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ページタイトルのスタイル */
+  h1[transition\\:name="page-title"] {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2563eb;
+    text-align: center;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ヒーロー画像のスタイル */
+  .hero-image {
+    width: 100%;
+    max-width: 800px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0 auto 3rem;
+    display: block;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  /* セクションスタイル */
+  section {
+    margin-bottom: 4rem;
+  }
+
+  section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+  }
+
+  .intro {
+    text-align: center;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+  }
+
+  .intro p {
+    color: #64748b;
+    line-height: 1.7;
+  }
+
+  /* 機能カードグリッド */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.2);
+  }
+
+  .feature-card h3 {
+    color: #2563eb;
+    margin-bottom: 1rem;
+  }
+
+  .feature-card code {
+    background: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #7c3aed;
+  }
+
+  /* ナビゲーションカード */
+  .nav-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .nav-card {
+    display: block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .nav-card:hover {
+    transform: scale(1.02);
+  }
+
+  .nav-card h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-card p {
+    opacity: 0.9;
+    margin-bottom: 1rem;
+  }
+
+  .arrow {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2rem;
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+  }
+
+  .nav-card:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* Tips セクション */
+  .tips {
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 4px solid #2563eb;
+  }
+
+  .tips h2 {
+    margin-bottom: 1rem;
+  }
+
+  .tips ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .tips li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .tips li::before {
+    content: "💡";
+    position: absolute;
+    left: 0;
+  }
+
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    h1[transition\\:name="page-title"] {
+      font-size: 2rem;
+    }
+
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

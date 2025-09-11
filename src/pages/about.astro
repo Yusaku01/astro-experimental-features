@@ -1,0 +1,343 @@
+---
+// about.astro - 記事の実装例を忠実に再現
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="アバウト - View Transitions実験">
+  <div class="container">
+    <!-- 記事の実装例：同じtransition:nameでタイトル遷移 -->
+    <h1 transition:name="page-title">アバウトページ</h1>
+    
+    <!-- 記事の実装例：異なる画像でも同じtransition:nameで遷移 -->
+    <img
+      src="/placeholder-hero.svg"
+      alt="アバウト画像（プレースホルダー）"
+      class="hero-image"
+      transition:name="hero-image"
+    />
+    
+    <section class="about-content">
+      <h2>このプロジェクトについて</h2>
+      <p>
+        このサイトは、<strong>「AstroのView Transitions」</strong>記事の実装例を
+        実際に体験できる実験プロジェクトです。
+      </p>
+      
+      <div class="magic-explanation">
+        <h3>🪄 ここで起こる魔法を説明します</h3>
+        <ul>
+          <li>
+            <strong>タイトルの遷移</strong>: 「ホームページ」から「アバウトページ」へ、
+            文字がスムーズに変化します
+          </li>
+          <li>
+            <strong>画像の遷移</strong>: 異なる画像でも、同じ<code>transition:name</code>により
+            位置やサイズが滑らかに変化します
+          </li>
+          <li>
+            <strong>自動的な補間</strong>: Astro が要素の位置、サイズ、不透明度を
+            自動的に補間してアニメーションを生成します
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="implementation-details">
+      <h2>実装の詳細</h2>
+      
+      <div class="code-example">
+        <h3>共通レイアウト</h3>
+        <pre><code>&lt;ViewTransitions /&gt;
+&lt;header transition:persist&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+        <p>ヘッダーは<code>transition:persist</code>で状態を保持</p>
+      </div>
+
+      <div class="code-example">
+        <h3>ページ間の要素共有</h3>
+        <pre><code>&lt;h1 transition:name="page-title"&gt;&#123;pageTitle&#125;&lt;/h1&gt;
+&lt;img transition:name="hero-image" src="..." /&gt;</code></pre>
+        <p>同じ<code>transition:name</code>でスムーズな遷移を実現</p>
+      </div>
+    </section>
+
+    <section class="browser-support">
+      <h2>ブラウザ対応状況 (2025年最新)</h2>
+      <div class="support-table">
+        <div class="browser-item">
+          <span class="browser-icon">🌐</span>
+          <div class="browser-info">
+            <strong>Chrome 111+</strong>
+            <span class="status supported">フルサポート</span>
+          </div>
+        </div>
+        
+        <div class="browser-item">
+          <span class="browser-icon">📱</span>
+          <div class="browser-info">
+            <strong>Safari 18.0+</strong>
+            <span class="status supported">フルサポート</span>
+          </div>
+        </div>
+        
+        <div class="browser-item">
+          <span class="browser-icon">🦊</span>
+          <div class="browser-info">
+            <strong>Firefox 144+</strong>
+            <span class="status supported">フルサポート（予定）</span>
+          </div>
+        </div>
+      </div>
+      
+      <p class="support-note">
+        <strong>グローバルサポート率:</strong> 87%以上<br>
+        <strong>フォールバック:</strong> 通常のページ遷移として動作
+      </p>
+    </section>
+
+    <section class="navigation">
+      <div class="nav-buttons">
+        <a href="/" class="nav-button prev">
+          <span class="arrow">←</span>
+          ホームページへ戻る
+        </a>
+        
+        <a href="/blog" class="nav-button next">
+          ブログページへ
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ページタイトル（ホームページと共有） */
+  h1[transition\\:name="page-title"] {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #7c3aed;
+    text-align: center;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ヒーロー画像（ホームページと共有） */
+  .hero-image {
+    width: 100%;
+    max-width: 800px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0 auto 3rem;
+    display: block;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  }
+
+  section {
+    margin-bottom: 4rem;
+  }
+
+  section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+  }
+
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-content p {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  /* 魔法の説明セクション */
+  .magic-explanation {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: left;
+    margin-top: 2rem;
+  }
+
+  .magic-explanation h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .magic-explanation ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .magic-explanation li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .magic-explanation li::before {
+    content: "✨";
+    position: absolute;
+    left: 0;
+  }
+
+  .magic-explanation code {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* 実装詳細セクション */
+  .implementation-details {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .code-example {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .code-example h3 {
+    color: #2563eb;
+    margin-bottom: 1rem;
+  }
+
+  .code-example pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  .code-example code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+
+  .code-example p {
+    color: #64748b;
+    font-size: 0.95rem;
+  }
+
+  /* ブラウザ対応表 */
+  .support-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .browser-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  }
+
+  .browser-icon {
+    font-size: 2rem;
+  }
+
+  .browser-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .status.supported {
+    background: #10b981;
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+
+  .support-note {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 6px;
+    padding: 1rem;
+    color: #92400e;
+    line-height: 1.6;
+  }
+
+  /* ナビゲーションボタン */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #2563eb;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .nav-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+  }
+
+  .nav-button.prev {
+    background: #64748b;
+  }
+
+  .nav-button.prev:hover {
+    background: #475569;
+  }
+
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    h1[transition\\:name="page-title"] {
+      font-size: 2rem;
+    }
+
+    .nav-buttons {
+      flex-direction: column;
+    }
+
+    .support-table {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

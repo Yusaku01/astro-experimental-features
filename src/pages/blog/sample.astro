@@ -1,0 +1,421 @@
+---
+// blog/sample.astro - 個別記事ページの実装例
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="記事サンプル - View Transitions実験">
+  <div class="container">
+    <!-- 記事のタイトル（共有要素） -->
+    <h1 transition:name="page-title">View Transitions実装ガイド</h1>
+    
+    <!-- 記事カード（ブログ一覧から遷移） -->
+    <article class="article-content" transition:name="post-1">
+      <div class="article-header">
+        <div class="article-meta">
+          <time class="publish-date">2025年1月15日</time>
+          <div class="tags">
+            <span class="tag">フロントエンド</span>
+            <span class="tag">Astro</span>
+            <span class="tag">View Transitions</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="article-body">
+        <section>
+          <h2>はじめに</h2>
+          <p>
+            この記事では、<strong>AstroのView Transitions</strong>を使って、
+            従来のMPAでもSPAのような滑らかなページ遷移を実現する方法について詳しく解説します。
+          </p>
+          <p>
+            View Transitions APIは、ブラウザネイティブの機能として実装されており、
+            JavaScriptフレームワークに依存することなく使用できます。
+          </p>
+        </section>
+
+        <section>
+          <h2>基本的な実装方法</h2>
+          <div class="code-example">
+            <h3>1. ClientRouterコンポーネントの追加</h3>
+            <pre><code>&#45;&#45;&#45;
+// Layout.astro
+import &#123; ClientRouter &#125; from 'astro:transitions';
+&#45;&#45;&#45;
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;ClientRouter /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;slot /&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+
+          <div class="code-example">
+            <h3>2. 要素の共有設定</h3>
+            <pre><code>&lt;!-- ページAで --&gt;
+&lt;h1 transition:name="main-title"&gt;ページAのタイトル&lt;/h1&gt;
+
+&lt;!-- ページBで --&gt;
+&lt;h1 transition:name="main-title"&gt;ページBのタイトル&lt;/h1&gt;</code></pre>
+            <p class="code-description">
+              同じ<code>transition:name</code>を持つ要素間で自動的に遷移アニメーションが生成されます。
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>アニメーションのカスタマイズ</h2>
+          <p>
+            記事で紹介されているように、CSS疑似要素を使用してアニメーションを細かく制御できます：
+          </p>
+          
+          <div class="code-example">
+            <h3>カスタムアニメーション例</h3>
+            <pre><code>/* 旧要素（消える要素）のアニメーション */
+::view-transition-old(main-title) &#123;
+  animation: slideOutLeft 0.3s ease-in-out;
+&#125;
+
+/* 新要素（現れる要素）のアニメーション */
+::view-transition-new(main-title) &#123;
+  animation: slideInRight 0.3s ease-in-out;
+&#125;
+
+@keyframes slideOutLeft &#123;
+  to &#123;
+    transform: translateX(-100%);
+    opacity: 0;
+  &#125;
+&#125;
+
+@keyframes slideInRight &#123;
+  from &#123;
+    transform: translateX(100%);
+    opacity: 0;
+  &#125;
+&#125;</code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>実践例：この記事での活用</h2>
+          <div class="features-showcase">
+            <div class="feature-item">
+              <h3>🎯 共有タイトル</h3>
+              <p>ページ遷移時にタイトルがスムーズに変化します</p>
+            </div>
+            
+            <div class="feature-item">
+              <h3>📝 記事カード遷移</h3>
+              <p>ブログ一覧から記事詳細への自然な流れ</p>
+            </div>
+            
+            <div class="feature-item">
+              <h3>⚙️ パフォーマンス重視</h3>
+              <p>軽量で高速なページ遷移を実現</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>ブラウザ対応とフォールバック</h2>
+          <div class="browser-compatibility">
+            <p>
+              現在のブラウザ対応状況は以下の通りです（2025年1月現在）：
+            </p>
+            <ul class="browser-list">
+              <li class="supported">✅ Chrome 111以降 - 完全サポート</li>
+              <li class="supported">✅ Safari 18.0以降 - 完全サポート</li>
+              <li class="supported">✅ Firefox 144以降 - 完全サポート</li>
+              <li class="partial">⚠️ 未対応ブラウザ - 通常のページ遷移として動作</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2>まとめ</h2>
+          <p>
+            AstroのView Transitionsを使用することで、従来のMPAアプリケーションでも
+            モダンなユーザー体験を提供できます。実装は簡単で、パフォーマンスへの
+            影響も最小限に抑えられています。
+          </p>
+          <p>
+            実際にこのデモサイトでページを移動して、スムーズな遷移を体感してみてください！
+          </p>
+        </section>
+      </div>
+    </article>
+
+    <section class="navigation">
+      <div class="nav-buttons">
+        <a href="/blog" class="nav-button prev">
+          <span class="arrow">←</span>
+          ブログ一覧に戻る
+        </a>
+        
+        <a href="/" class="nav-button next">
+          ホームページへ
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ページタイトル（他ページと共有） */
+  h1[transition\\:name="page-title"] {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #7c3aed;
+    text-align: center;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* 記事コンテンツ */
+  .article-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    margin-bottom: 4rem;
+  }
+
+  .article-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .publish-date {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  /* 記事本文 */
+  .article-body {
+    padding: 3rem;
+    line-height: 1.8;
+  }
+
+  .article-body h2 {
+    color: #1e293b;
+    font-size: 1.8rem;
+    margin: 3rem 0 1.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .article-body h2:first-child {
+    margin-top: 0;
+  }
+
+  .article-body p {
+    color: #475569;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-body strong {
+    color: #1e293b;
+    font-weight: 600;
+  }
+
+  /* コード例 */
+  .code-example {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .code-example h3 {
+    color: #2563eb;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .code-example pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+
+  .code-example code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  }
+
+  .code-description {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+  }
+
+  .code-description code {
+    background: #f1f5f9;
+    color: #7c3aed;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  /* 機能紹介 */
+  .features-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .feature-item {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #7dd3fc;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .feature-item h3 {
+    color: #0369a1;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-item p {
+    color: #0c4a6e;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  /* ブラウザ対応表 */
+  .browser-compatibility {
+    background: #fefce8;
+    border: 1px solid #facc15;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .browser-compatibility p {
+    color: #92400e;
+    margin-bottom: 1rem;
+  }
+
+  .browser-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .browser-list li {
+    padding: 0.5rem 0;
+    color: #92400e;
+  }
+
+  .browser-list li.supported {
+    color: #059669;
+  }
+
+  .browser-list li.partial {
+    color: #d97706;
+  }
+
+  /* ナビゲーションボタン */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #7c3aed;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .nav-button:hover {
+    background: #6d28d9;
+    transform: translateY(-2px);
+  }
+
+  .nav-button.prev {
+    background: #64748b;
+  }
+
+  .nav-button.prev:hover {
+    background: #475569;
+  }
+
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    h1[transition\\:name="page-title"] {
+      font-size: 2.2rem;
+    }
+
+    .article-body {
+      padding: 2rem;
+    }
+
+    .article-meta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav-buttons {
+      flex-direction: column;
+    }
+
+    .features-showcase {
+      grid-template-columns: 1fr;
+    }
+
+    .code-example pre {
+      font-size: 0.8rem;
+    }
+  }
+</style>
