@@ -19,6 +19,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@biomejs/biome": "^2.2.3",
+    "rollup-plugin-visualizer": "^6.0.3",
     "typescript": "^5.5.0"
   },
   "description": "Astro View Transitions実験プロジェクト",
