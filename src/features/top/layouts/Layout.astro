@@ -1,0 +1,166 @@
+---
+// Layout.astro - 記事のコード例を忠実に実装
+import BaseLayout from '@/shared/layouts/BaseLayout.astro';
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <meta name="description" content="Astro View Transitions実験プロジェクト" />
+    <title>{title}</title>  
+  </Fragment>
+  <Fragment slot="body">
+    <!-- ヘッダー -->
+    <header class="site-header" transition:persist>
+      <div class="container">
+        <a href="/" class="logo" aria-label="Home">View Transitions実験</a>
+        <nav aria-label="Primary">
+          <ul class="menu">
+            <li><a href="/">ホーム</a></li>
+            <li><a href="/about">アバウト</a></li>
+            <li><a href="/blog">ブログ</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    
+    <!-- メイン -->
+    <main>
+      <slot />
+    </main>
+    
+    <!-- フッター -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 View Transitions実験プロジェクト</p>
+        <p>記事「AstroのView Transitions」の実装例</p>
+      </div>
+    </footer>
+
+    <!-- JS -->
+    <script>
+    </script>
+  </Fragment>
+</BaseLayout>
+
+<style>
+  /* 基本的なレイアウトスタイル */
+  :root {
+    --primary-color: #2563eb;
+    --secondary-color: #64748b;
+    --background-color: #ffffff;
+    --text-color: #1e293b;
+    --border-color: #e2e8f0;
+    --transition-duration: 0.3s;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    line-height: 1.6;
+  }
+
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ヘッダースタイル */
+  .site-header {
+    background: white;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .site-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 20px;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+  }
+
+  .menu a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-duration);
+  }
+
+  .menu a:hover {
+    color: var(--primary-color);
+  }
+
+  .browser-support {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .support-indicator {
+    font-size: 1.2rem;
+    cursor: help;
+  }
+
+  /* メインコンテンツ */
+  main {
+    flex: 1;
+    padding: 2rem 0;
+  }
+
+  /* フッター */
+  footer {
+    background: #f8fafc;
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+  }
+
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    .site-header .container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .menu {
+      gap: 1rem;
+    }
+  }
+</style>
