@@ -1,6 +1,6 @@
 ---
 // Layout.astro - 記事のコード例を忠実に実装
-import { ViewTransitions } from 'astro:transitions';
+import BaseLayout from '@/shared/layouts/BaseLayout.astro';
 
 export interface Props {
   title: string;
@@ -9,22 +9,13 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
+<BaseLayout>
+  <Fragment slot="head">
     <meta name="description" content="Astro View Transitions実験プロジェクト" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
-    
-    <!-- View Transitionsを有効化 -->
-    <ViewTransitions />
-    
-    <!-- グローバルスタイルの読み込み -->
-    <link rel="stylesheet" href="/src/styles/global.css" />
-  </head>
-  <body>
-    <!-- ヘッダーを固定（記事の実装例通り） -->
+    <title>{title}</title>  
+  </Fragment>
+  <Fragment slot="body">
+    <!-- ヘッダー -->
     <header class="site-header" transition:persist>
       <div class="container">
         <a href="/" class="logo" aria-label="Home">View Transitions実験</a>
@@ -35,15 +26,10 @@ const { title } = Astro.props;
             <li><a href="/blog">ブログ</a></li>
           </ul>
         </nav>
-        
-        <!-- ブラウザ対応状況の表示 -->
-        <div class="browser-support" id="browser-support">
-          <span class="support-indicator" id="support-indicator">🔍</span>
-        </div>
       </div>
     </header>
     
-    <!-- メインコンテンツ -->
+    <!-- メイン -->
     <main>
       <slot />
     </main>
@@ -56,29 +42,11 @@ const { title } = Astro.props;
       </div>
     </footer>
 
-    <!-- View Transitionsサポート検知スクリプト -->
+    <!-- JS -->
     <script>
-      // ブラウザ対応状況をチェック
-      document.addEventListener('DOMContentLoaded', () => {
-        const indicator = document.getElementById('support-indicator');
-        if (indicator) {
-          if ('startViewTransition' in document) {
-            indicator.textContent = '✅';
-            indicator.title = 'View Transitions対応ブラウザ';
-          } else {
-            indicator.textContent = '❌';
-            indicator.title = 'View Transitions未対応（フォールバック動作）';
-          }
-        }
-      });
-
-      // モーション設定の尊重（記事のアクセシビリティ例）
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.documentElement.style.setProperty('--transition-duration', '0s');
-      }
     </script>
-  </body>
-</html>
+  </Fragment>
+</BaseLayout>
 
 <style>
   /* 基本的なレイアウトスタイル */

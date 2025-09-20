@@ -1,0 +1,20 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '@/shared/styles/global.css';
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <slot name="head" />
+
+    <!-- View Transitionsを有効化 -->
+    <ClientRouter />
+  </head>
+
+  <body>
+    <slot name="body" />
+  </body>
+</html>
