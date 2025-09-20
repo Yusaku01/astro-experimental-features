@@ -22,7 +22,7 @@
     "rollup-plugin-visualizer": "^6.0.3",
     "typescript": "^5.5.0"
   },
-  "description": "Astro View Transitions実験プロジェクト",
+  "description": "Astro 実験プロジェクト",
   "volta": {
     "node": "22.5.0"
   }
