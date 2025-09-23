@@ -1,0 +1,49 @@
+# pnpm CI/CD設定例（必要に応じて.disabledを削除して有効化）
+# GitHub Actionsでpnpmを使用する場合の推奨設定
+
+name: CI with pnpm
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.17.1
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Type check
+      run: pnpm type-check
+
+    - name: Lint and format
+      run: pnpm lint-and-format
+
+    - name: Build
+      run: pnpm build
+
+    # Astroプロジェクトの場合、E2Eテストなど追加可能
+    # - name: E2E tests
+    #   run: pnpm test:e2e

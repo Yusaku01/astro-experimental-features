@@ -11,7 +11,11 @@
     "biome:check": "biome check .",
     "biome:format": "biome format --write .",
     "biome:lint": "biome lint .",
-    "biome:fix": "biome check --write ."
+    "biome:fix": "biome check --write .",
+    "clean": "rm -rf node_modules pnpm-lock.yaml .astro dist",
+    "fresh-install": "pnpm clean && pnpm install",
+    "type-check": "astro check",
+    "lint-and-format": "pnpm biome:fix && pnpm type-check"
   },
   "dependencies": {
     "astro": "^5.13.0"
@@ -22,7 +26,8 @@
     "rollup-plugin-visualizer": "^6.0.3",
     "typescript": "^5.5.0"
   },
-  "description": "Astro 実験プロジェクト",
+  "description": "Astro 実験プロジェクト (pnpm最適化済み)",
+  "packageManager": "pnpm@10.17.1",
   "volta": {
     "node": "22.5.0"
   }
